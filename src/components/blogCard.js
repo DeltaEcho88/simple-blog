@@ -3,8 +3,7 @@ import Image from "next/image";
 import moment from "moment";
 
 export default function blogCard({data}) {
-  // alert
-  const { featuredImage, categories, title, author, createdAt, content, blogSummary } = data;
+  const { featuredImage, categories, title, author, createdAt, blogSummary } = data;
   const postCreated = moment(new Date(createdAt)).fromNow();
   return (
     <Box>
@@ -44,7 +43,7 @@ export default function blogCard({data}) {
             categories.map(({id, title}, idx) => {
               return(
                 <Link
-                  key={id}
+                  key={idx}
                   href="#"
                   underline="none"
                   sx={{
