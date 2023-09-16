@@ -59,7 +59,6 @@ export default async function BlogSummary() {
 
   return (
     <Box 
-      container={true}
       sx={gridContainer} 
     >
       {
@@ -68,7 +67,7 @@ export default async function BlogSummary() {
             <>
               <Box 
                 key={idx} 
-                item xs={4}
+                xs={4}
                 sx={gridItem}
               >
                 <BlogCard 
