@@ -1,21 +1,22 @@
 import { useCallback } from "react";
 
-const API = process.env.HYGRAPH_ENDPOINT;
-
-const useFetchBlogSearch = () => {
+const UseFetchBlogSearch = () => {
   
   const blogSearchList = useCallback(
     async (params) => {
-      console.log(params);
-      const response = await fetch(API, {
+      if( params.length === 0){
+        return 'No Posts Found';
+      }
+      const response = await fetch(process.env.HYGRAPH_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           query: `
-            query BlogSearch() {
-              blogs() {
+            query BlogSearch($searchTerms: String!) {
+              blogs(where: {title_contains: $searchTerms}) {
+                id
                 title
                 blogSummary
                 author {
@@ -36,11 +37,10 @@ const useFetchBlogSearch = () => {
               }
             }
         `,
-        variables: {params}
-        }),
+        variables: { searchTerms: params },
+      }),
         next: { revalidate: 10 },
       });
-      console.log( response );
 
       const json = await response.json();
     
@@ -50,4 +50,4 @@ const useFetchBlogSearch = () => {
   return blogSearchList;
 }
 
-export default useFetchBlogSearch;
+export default UseFetchBlogSearch;

@@ -1,18 +1,19 @@
 "use client";
 
-import { Button, Box, TextField, Modal } from '@mui/material';
+import { Button, Box, Stack, TextField, Typography, Modal } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useCallback, useEffect, useState } from 'react';
-import useFetchBlogSearch from '@/hooks/useFetchBlogSearch';
+import UseFetchBlogSearch from '@/hooks/UseFetchBlogSearch';
+import BlogList from './BlogList';
 
 const SearchForm = () => {
   const [searchTerms, setSearchTerms] = useState('');
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [blogData, setBlogData] = useState({});
-  const fetchData = useFetchBlogSearch();
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+  const [isLoaded, setIsLoaded] = useState(false);
+  const fetchData = UseFetchBlogSearch();
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   const formStyle = {
     width: '100%',
@@ -36,29 +37,32 @@ const SearchForm = () => {
       const res = await fetchData(
         params
       );
-      setBlogData( res );
+      const data = res.data?.blogs;
+      if( data ){
+        setBlogData( data );
+        setIsLoaded( true );
+      }
     },[fetchData]
   );
 
   useEffect(() => {
-
     const timeoutID = setTimeout(() => {
-      getBlogSearch({title_contains: searchTerms})
+      getBlogSearch(searchTerms)
     }, 1000);
 
     return () => {
-      // 👇️ clear timeout when the component unmounts
       clearTimeout(timeoutID);
     };
   },[getBlogSearch, searchTerms]);
 
-  console.log(blogData);
-
   return (
-    <div>
+    <Stack
+      flexDirection="row"
+      alignItems="center"
+    >
       <Button onClick={handleOpen}><SearchIcon /></Button>
       <Modal
-        open={open}
+        open={isOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -68,14 +72,35 @@ const SearchForm = () => {
         >
           <TextField 
             id="standard-basic" 
-            label="Standard" 
+            label="Search Posts" 
             variant="standard"
             sx={formStyle}
             onChange={(e) => setSearchTerms(e.target.value)}
           />
+          <Box>
+            <Typography
+              color="#000"
+              textAlign="center"
+              mt="40px"
+            >
+              {blogData.length ? 'Posts Found: '+blogData.length : 'No Posts Found'}
+            </Typography>
+            {
+              isLoaded && isOpen && (
+                blogData.map((blog, idx) => {
+                  return(
+                    <BlogList 
+                      key={idx} 
+                      data={blog}
+                    />
+                  )
+                })
+              )
+            }
+          </Box>
         </Box>
       </Modal>
-    </div>
+    </Stack>
   )
 }
 

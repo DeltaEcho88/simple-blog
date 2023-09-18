@@ -1,12 +1,17 @@
 import { Avatar, Box, Typography, Link } from "@mui/material";
 import Image from "next/image";
 import moment from "moment";
+import { trimmedText } from "@/helper";
 
-export default function blogCard({data}) {
-  const { featuredImage, categories, title, author, createdAt, blogSummary } = data;
+export default function BlogCard({data}) {
+  const {featuredImage, categories, title, author, createdAt, blogSummary } = data;
   const postCreated = moment(new Date(createdAt)).fromNow();
   return (
-    <Box>
+    <Box
+      sx={{
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+      }}
+    >
       <Box
         height="240px"
         overflow="hidden"
@@ -71,14 +76,14 @@ export default function blogCard({data}) {
             underline="none"
             color="black"
           >
-            {title}
+            {trimmedText(title, 50, '...')}
           </Link>
         </Typography>
         <Typography
           paragraph
           color="gray"
         >
-          {blogSummary}
+          {trimmedText( blogSummary, 200, '...' )}
         </Typography>
         <Box
           sx={{

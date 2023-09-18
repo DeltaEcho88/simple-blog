@@ -1,13 +1,13 @@
-import { Box, TextField } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { BlogCard } from "@/components";
-import { useFetchBlogs } from "@/hooks";
+import { UseFetchBlogs } from "@/hooks";
 
 export default async function BlogSummary() {
-  const {data} = await useFetchBlogs('');
+  const { data } = await UseFetchBlogs();
 
   const gridContainer = {
     display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)"
+    gridTemplateColumns: "repeat(2, 1fr)"
   }
 
   const gridItem = {
@@ -20,11 +20,12 @@ export default async function BlogSummary() {
       sx={gridContainer} 
     >
       {
-      data.blogs.map((blog, idx) => {
+      data &&
+        data.blogs.map((blog) => {
           return(
             <>
               <Box 
-                key={idx}
+                key={blog.id}
                 sx={gridItem}
               >
                 <BlogCard

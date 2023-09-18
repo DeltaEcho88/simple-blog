@@ -6,17 +6,26 @@ export default function Header() {
   const headerStyles = {
     display: 'flex',
     justifyContent: 'space-between',
-    width: '100%'
+    width: '100%',
   }
 
   return (
-    <Container
-      sx={headerStyles}
+    <Box
+      as="header"
+      backgroundColor="#fff"
     >
-      <Typography>
-        Simple Blog Test
-      </Typography>
-      <SearchForm />
-    </Container>
+      <Container
+        sx={headerStyles}
+      >
+        <Typography
+          variant="h5"
+          py="24px"
+          color="#000"
+        >
+          Simple Blog Test
+        </Typography>
+        <SearchForm />
+      </Container>
+    </Box>
   )
 }

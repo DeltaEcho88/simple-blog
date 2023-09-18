@@ -1,4 +1,4 @@
-export const useFetchBlogs = async () => {
+export const UseFetchBlogs = async () => {
   const response = await fetch(process.env.HYGRAPH_ENDPOINT, {
     method: "POST",
     headers: {
@@ -8,6 +8,7 @@ export const useFetchBlogs = async () => {
       query: `
         query Blogs {
           blogs {
+            id
             title
             blogSummary
             author {
@@ -33,11 +34,9 @@ export const useFetchBlogs = async () => {
     next: { revalidate: 10 },
   });
 
-  console.log( response);
-
   const json = await response.json();
 
   return json;
 }
 
-export default useFetchBlogs;
+export default UseFetchBlogs;

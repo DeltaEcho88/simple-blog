@@ -1,16 +1,31 @@
 "use-client"
 
 import styles from './page.module.css';
-import { Box } from '@mui/material';
-import { BlogSummary } from '@/components';
+import { Grid, Container } from '@mui/material';
+import { BlogSummary, CategoryWidgets } from '@/components';
 
 export default async function Home() {
 
   return (
     <main className={styles.main}>
-      <Box>
-          <BlogSummary />
-      </Box>
+      <Container>
+        <Grid
+          container
+          spacing={2}
+        >
+          <Grid item xs={8}>
+            <div>
+              <BlogSummary />
+            </div>
+          </Grid>
+          <Grid item xs={4}
+          >
+            <div>
+              <CategoryWidgets />
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
     </main>
   )
 }
