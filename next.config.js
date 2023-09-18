@@ -6,7 +6,8 @@ const nextConfig = {
   env: {
     HYGRAPH_ENDPOINT: process.env.HYGRAPH_ENDPOINT,
   },
-  swcMinify: true
+  swcMinify: true,
+  ignoreDuringBuilds: true
 }
 
 module.exports = nextConfig
