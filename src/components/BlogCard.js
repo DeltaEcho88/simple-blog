@@ -2,21 +2,22 @@ import { Avatar, Box, Typography, Link } from "@mui/material";
 import Image from "next/image";
 import moment from "moment";
 import { trimmedText } from "@/helper";
+import {CategoryComponents} from "@/components";
 
 export default function BlogCard({data}) {
-  
+
   const {featuredImage, categories, title, author, createdAt, blogSummary } = data;
   const postCreated = moment(new Date(createdAt)).fromNow();
   return (
     <Box
       sx={{
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        height: '100%'
       }}
     >
       <Box
         height="240px"
         overflow="hidden"
-        borderRadius="2px"
       >
         <a href="#">
           <Image 
@@ -37,7 +38,10 @@ export default function BlogCard({data}) {
         padding={2}
         sx={{
           backgroundColor: 'transparent',
-          boxShadow: 'none'
+          boxShadow: 'none',
+          height: 'calc( 100% - 272px)',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         <Box
@@ -46,22 +50,14 @@ export default function BlogCard({data}) {
           }}
         >
           {
-            categories.map(({id, title}, idx) => {
+            categories.map(({id, title, categoryColor}, idx) => {
               return(
-                <Link
-                  key={idx}
-                  href="#"
-                  underline="none"
-                  sx={{
-                    background: 'cyan',
-                    borderRadius: '20px',
-                    padding: '4px 12px',
-                    fontSize: '12px',
-                    display: 'inline-block'
-                  }}
+                <CategoryComponents
+                  key={id}
+                  bgColor={categoryColor?.hex}
                 >
                   {title}
-                </Link>
+                </CategoryComponents>
               )
             })
           }
@@ -89,7 +85,8 @@ export default function BlogCard({data}) {
         <Box
           sx={{
             display: 'flex',
-            gap: '16px'
+            gap: '16px',
+            marginTop: 'auto'
           }}
         >
           <Box>

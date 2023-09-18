@@ -1,5 +1,6 @@
 import { Avatar, Box, Stack, Typography, Link } from "@mui/material";
 import { trimmedText } from '@/helper';
+import { CategoryComponents } from '@/components';
 import Image from "next/image";
 import moment from "moment";
 
@@ -15,8 +16,6 @@ export default function BlogList(blogData) {
     height: '200px',
     overflow: 'hidden'
   }
-
-  
 
   const contentWrapper = {
     flex: 1
@@ -58,22 +57,14 @@ export default function BlogList(blogData) {
           sx={categoriesStyle}
         >
         {
-            categories.map(({id, title}, idx) => {
+            categories.map(({id, title, categoryColor}, idx) => {
               return(
-                <Link
-                  key={idx}
-                  href="#"
-                  underline="none"
-                  sx={{
-                    background: 'cyan',
-                    borderRadius: '20px',
-                    padding: '4px 12px',
-                    fontSize: '12px',
-                    display: 'inline-block'
-                  }}
+                <CategoryComponents
+                  key={id}
+                  bgColor={categoryColor?.hex}
                 >
                   {title}
-                </Link>
+                </CategoryComponents>
               )
             })
           }

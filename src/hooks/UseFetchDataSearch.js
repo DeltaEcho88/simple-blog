@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-const UseFetchBlogSearch = () => {
+const UseFetchDataSearch = () => {
   
   const blogSearchList = useCallback(
     async (params) => {
@@ -27,6 +27,9 @@ const UseFetchBlogSearch = () => {
                 }
                 categories {
                   title
+                  categoryColor {
+                    hex
+                  }
                 }
                 featuredImage {
                   url
@@ -50,4 +53,4 @@ const UseFetchBlogSearch = () => {
   return blogSearchList;
 }
 
-export default UseFetchBlogSearch;
+export default UseFetchDataSearch;

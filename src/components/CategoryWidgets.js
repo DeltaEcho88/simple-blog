@@ -1,23 +1,7 @@
-'use client'
+import { Box, Typography } from "@mui/material";
+import { CategoryComponents } from "@/components";
 
-import { Box, Link, Typography } from "@mui/material";
-import { UseFetchCategories } from "@/hooks";
-import { useEffect, useState } from "react";
-
-export default function CategoryWidgets() {
-
-  const [categoriesData, setCategoriesData] = useState({});
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  useEffect( () => {
-    const fetchData = async () => {
-      const { data } = await UseFetchCategories();
-      setCategoriesData(data.categories);
-      setIsLoaded(true);
-    }
-    fetchData();
-  },[])
-
+export default function CategoryWidgets(categories) {
   const categoryWrapper = {
     display: 'flex',
     gap: '8px',
@@ -51,16 +35,15 @@ export default function CategoryWidgets() {
         sx={categoryWrapper}
       >
         {
-          isLoaded && categoriesData &&
-          categoriesData.map((category, idx) => {
+          categories &&
+          categories.data.map(({id, title, categoryColor}, idx) => {
             return(
-              <Link
-                key={category.id}
-                href="#"
-                sx={categoryStyle}
+              <CategoryComponents
+                key={id}
+                bgColor={categoryColor?.hex}
               >
-                {category.title}
-              </Link>
+                {title}
+              </CategoryComponents>
             )
           })
         }

@@ -3,7 +3,7 @@
 import { Button, Box, Stack, TextField, Typography, Modal } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useCallback, useEffect, useState } from 'react';
-import { UseFetchBlogSearch } from '@/hooks';
+import { UseFetchDataSearch } from '@/hooks';
 import { BlogList } from '@/components';
 
 const SearchForm = () => {
@@ -11,7 +11,7 @@ const SearchForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [blogData, setBlogData] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
-  const fetchData = UseFetchBlogSearch();
+  const fetchData = UseFetchDataSearch();
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
 
@@ -85,18 +85,26 @@ const SearchForm = () => {
             >
               {blogData.length ? 'Posts Found: '+blogData.length : 'No Posts Found'}
             </Typography>
-            {
-              isLoaded && isOpen && (
-                blogData.map((blog, idx) => {
-                  return(
-                    <BlogList 
-                      key={idx} 
-                      data={blog}
-                    />
-                  )
-                })
-              )
-            }
+            <Box
+              sx={{
+                position: 'relative',
+                overflowX: 'auto',
+                maxHeight: '700px'
+              }}
+            >
+              {
+                isLoaded && isOpen && (
+                  blogData.map((blog, idx) => {
+                    return(
+                      <BlogList 
+                        key={idx} 
+                        data={blog}
+                      />
+                    )
+                  })
+                )
+              }
+            </Box>
           </Box>
         </Box>
       </Modal>

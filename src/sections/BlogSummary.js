@@ -1,17 +1,16 @@
 import { Box, Skeleton } from "@mui/material";
 import { BlogCard } from "@/components";
-import { UseFetchBlogs } from "@/hooks";
+import { UseFetchData } from "@/hooks";
 
-export default async function BlogSummary() {
-  const { data } = await UseFetchBlogs();
+export default async function BlogSummary(dataBlogs) {
 
   const gridContainer = {
     display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)"
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: '24px'
   }
 
   const gridItem = {
-    margin: "8px",
     background: 'white'
   }
 
@@ -20,8 +19,8 @@ export default async function BlogSummary() {
       sx={gridContainer} 
     >
       {
-      data &&
-        data.blogs.map((blog) => {
+      dataBlogs &&
+        dataBlogs.data.map((blog) => {
           return(
             <>
               <Box 
