@@ -3,7 +3,7 @@
 import { Button, Box, Stack, TextField, Typography, Modal } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useCallback, useEffect, useState } from 'react';
-import UseFetchBlogSearch from '@/hooks/UseFetchBlogSearch';
+import { UseFetchBlogSearch } from '@/hooks';
 import BlogList from './BlogList';
 
 const SearchForm = () => {
