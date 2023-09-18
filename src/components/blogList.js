@@ -1,21 +1,41 @@
-import { Avatar, Box, Typography, Link } from "@mui/material";
+import { Avatar, Box, Stack, Typography, Link } from "@mui/material";
+import { trimmedText } from '@/helper';
 import Image from "next/image";
 import moment from "moment";
-import { trimmedText } from "@/helper";
 
-export default function BlogCard({data}) {
-  const {featuredImage, categories, title, author, createdAt, blogSummary } = data;
+export default function BlogList(blogData) {
+
+  const { title, featuredImage, blogSummary, createdAt, categories, author } = blogData?.data;
   const postCreated = moment(new Date(createdAt)).fromNow();
+
+  const articleImage = {    
+    position: 'relative',
+    width: '33.33%',
+    height: '200px',
+    overflow: 'hidden'
+  }
+
+  const contentWrapper = {
+    flex: 1
+  }
+
+  const categoriesStyle = {
+    position: 'absolute',
+    top: '10px',
+    left: '10px'
+  }
+
   return (
-    <Box
-      sx={{
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-      }}
+    <Stack
+      as="article"
+      flexDirection="row"
+      alignItems="center"
+      gap="24px"
+      mt="32px"
+      boxShadow="0 20px 25px -5px rgba(0, 0, 0, 0.1),0 10px 10px -5px rgba(0, 0, 0, 0.04)"
     >
       <Box
-        height="240px"
-        overflow="hidden"
-        borderRadius="2px"
+        sx={articleImage}
       >
         <a href="#">
           <Image 
@@ -31,20 +51,10 @@ export default function BlogCard({data}) {
             }}
           />
         </a>
-      </Box>
-      <Box
-        padding={2}
-        sx={{
-          backgroundColor: 'transparent',
-          boxShadow: 'none'
-        }}
-      >
         <Box
-          sx={{
-            mb: '8px'
-          }}
+          sx={categoriesStyle}
         >
-          {
+        {
             categories.map(({id, title}, idx) => {
               return(
                 <Link
@@ -65,6 +75,10 @@ export default function BlogCard({data}) {
             })
           }
         </Box>
+      </Box>
+      <Box
+        sx={contentWrapper}
+      >
         <Typography 
           variant="h5"
           sx={{
@@ -76,44 +90,46 @@ export default function BlogCard({data}) {
             underline="none"
             color="black"
           >
-            {trimmedText(title, 50, '...')}
+            {trimmedText(title)}
           </Link>
         </Typography>
         <Typography
           paragraph
           color="gray"
         >
-          {trimmedText( blogSummary, 200, '...' )}
+          {trimmedText(blogSummary)}
         </Typography>
         <Box
           sx={{
             display: 'flex',
-            gap: '16px'
+            gap: '8px',
+            alignItems: 'center'
           }}
         >
           <Box>
             <Avatar
               alt="Remy Sharp"
               src={author.authorImage.url}
-              sx={{ width: 60, height: 60 }}
+              sx={{ width: 40, height: 40 }}
             />
           </Box>
           <Box>
             <Typography 
               variant="h6"
               color="black"
+              fontSize="14px"
             >
               {author.name}
             </Typography>
             <Typography
               color="black"
-              fontSize="14px"
+              fontSize="12px"
             >
               {postCreated}
             </Typography>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </Stack>
   )
 }

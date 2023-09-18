@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
   images: {
     domains: ['media.graphcms.com','media.graphassets.com'],
+  },
+  env: {
+    HYGRAPH_ENDPOINT: process.env.HYGRAPH_ENDPOINT,
   },
   swcMinify: true
 }
